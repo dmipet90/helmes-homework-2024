@@ -11,7 +11,7 @@ import java.util.Set;
 public class SectorResponseModel {
     private String sectorId;
     private String name;
+    private int depth;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Set<SectorResponseModel> children;
-
 }

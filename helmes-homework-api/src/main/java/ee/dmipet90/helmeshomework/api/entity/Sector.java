@@ -34,6 +34,9 @@ public class Sector {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
+    private int depth;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Sector parent;
 

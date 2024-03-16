@@ -12,5 +12,6 @@ import java.util.Set;
 public class SectorDto {
     private String sectorId;
     private String name;
+    private int depth;
     private Set<SectorDto> children;
 }

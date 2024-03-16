@@ -52,11 +52,11 @@ const UpdateUser = () => {
         });
     };
 
-    const renderSectors = ( node ) => {
+    const renderSectorsTree= ( node ) => {
         return node.map((item) => (
             <React.Fragment key={item.name}>
-                <option value={item.sectorId}>{item.name}</option>
-                {item.children && renderSectors(item.children)}
+                <option value={item.sectorId}>{'\u00A0'.repeat(item.depth * 4) + item.name}</option>
+                {item.children && renderSectorsTree(item.children)}
             </React.Fragment>
         ))
     };
@@ -105,7 +105,7 @@ const UpdateUser = () => {
                             name="sectorIds"
                             value={sectorIds}
                             onChange={handleSectorsChange}>
-                        {renderSectors(sectors)}
+                        {renderSectorsTree(sectors)}
                     </select>
                     {error.sectorIds && (
                         <div className="invalid-feedback">
