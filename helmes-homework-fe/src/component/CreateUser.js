@@ -13,16 +13,6 @@ const CreateUser = () => {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
-
-    const renderMenu = ( node ) => {
-        return node.map((item) => (
-            <React.Fragment key={item.name}>
-                <option value={item.sectorId}>{item.name}</option>
-                {item.children && renderMenu(item.children)}
-            </React.Fragment>
-        ))
-    };
-
     const retrieveSectors = () => {
         SectorService.getAll()
             .then((response) => {
@@ -33,7 +23,28 @@ const CreateUser = () => {
             });
     };
 
-    useEffect(retrieveSectors, []);
+    const saveUser = (event) => {
+        event.preventDefault();
+        UserService.create({
+            "name": name,
+            "sectorIds": sectorIds,
+            "termsAgreed": termsAgreed
+        }).then((response) => {
+            navigate(`/updateUser/${response.data.userId}`)
+        })
+            .catch((err) => {
+                setError(err.response.data)
+            });
+    };
+
+    const renderMenu = ( node ) => {
+        return node.map((item) => (
+            <React.Fragment key={item.name}>
+                <option value={item.sectorId}>{item.name}</option>
+                {item.children && renderMenu(item.children)}
+            </React.Fragment>
+        ))
+    };
 
     const handleNameChange = (e) => {
         setName(e.target.value);
@@ -47,19 +58,7 @@ const CreateUser = () => {
         setSectorIds(Array.from(e.currentTarget.selectedOptions, (v) => v.value))
     };
 
-    const saveUser = (event) => {
-        event.preventDefault();
-        UserService.create({
-            "name": name,
-            "sectorIds": sectorIds,
-            "termsAgreed": termsAgreed
-        }).then((response) => {
-            navigate(`/updateUser/${response.data.userId}`)
-        })
-        .catch((err) => {
-            setError(err.response.data)
-        });
-    };
+    useEffect(retrieveSectors, []);
 
     return (
         <div className="col-md-6">

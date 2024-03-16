@@ -13,16 +13,6 @@ const UpdateUser = () => {
     const [error, setError] = useState("");
     const params = useParams();
 
-
-    const renderMenu = ( node ) => {
-        return node.map((item) => (
-            <React.Fragment key={item.name}>
-                <option value={item.sectorId}>{item.name}</option>
-                {item.children && renderMenu(item.children)}
-            </React.Fragment>
-        ))
-    };
-
     const retrieveSectors = () => {
         SectorService.getAll()
             .then((response) => {
@@ -47,8 +37,30 @@ const UpdateUser = () => {
             });
     };
 
-    useEffect(retrieveSectors, []);
-    useEffect(retrieveUser, [params.userId]);
+    const saveUser = (event) => {
+        event.preventDefault();
+        UserService.update(params.userId, {
+            "name": name,
+            "sectorIds": sectorIds,
+            "termsAgreed": termsAgreed
+        }).then(() => {
+            setError("")
+            alert("Data successfully updated!")
+        })
+        .catch((err) => {
+            setError(err.response.data)
+        });
+    };
+
+    const renderSectors = ( node ) => {
+        return node.map((item) => (
+            <React.Fragment key={item.name}>
+                <option value={item.sectorId}>{item.name}</option>
+                {item.children && renderSectors(item.children)}
+            </React.Fragment>
+        ))
+    };
+
     const handleNameChange = (e) => {
         setName(e.target.value);
     }
@@ -61,23 +73,12 @@ const UpdateUser = () => {
         setSectorIds(Array.from(e.currentTarget.selectedOptions, (v) => v.value))
     };
 
-    const saveUser = (event) => {
-        event.preventDefault();
-        UserService.update(params.userId, {
-            "name": name,
-            "sectorIds": sectorIds,
-            "termsAgreed": termsAgreed
-        }).then(() => {
-            setError("")
-        })
-            .catch((err) => {
-                setError(err.response.data)
-            });
-    };
+    useEffect(retrieveSectors, []);
+    useEffect(retrieveUser, [params.userId]);
 
     return (
         <div className="col-md-6">
-            <p className="mt-5">Now you can edit and update your data or <Link to="/">go back</Link> to previous page</p>
+            <p className="mt-5">Now you can edit/update your data or <Link to="/">go back</Link> to home page</p>
             <form onSubmit={saveUser} >
                 <div className="mb-3">
                     <label htmlFor="name" className="form-label">Name</label>
@@ -104,7 +105,7 @@ const UpdateUser = () => {
                             name="sectorIds"
                             value={sectorIds}
                             onChange={handleSectorsChange}>
-                        {renderMenu(sectors)}
+                        {renderSectors(sectors)}
                     </select>
                     {error.sectorIds && (
                         <div className="invalid-feedback">
@@ -133,7 +134,6 @@ const UpdateUser = () => {
                     </div>
                 </div>
                 <button type="submit" className="btn btn-outline-secondary mb-3">Update</button>
-
             </form>
         </div>
     );
