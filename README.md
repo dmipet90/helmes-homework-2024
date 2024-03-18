@@ -67,6 +67,8 @@ For a better demo experience, an H2 database is used with an attached SQl dump f
 
 H2 Database:
 - H2 console url: http://localhost:8787/h2-console
+- Driver class: org.h2.Driver
+- JDBC url: jdbc:h2:mem:helmes-homework-db
 - User: sa
 - Password:
 - SQL dump file location:
