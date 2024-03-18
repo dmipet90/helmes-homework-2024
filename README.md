@@ -66,16 +66,13 @@ gradle bootRun
 For a better demo experience, an H2 database is used with an attached SQl dump file containing the necessary initial data to start using this application.
 
 H2 Database:
-- H2 console url: http://localhost:8787/h2-console
-- Driver class: org.h2.Driver
-- JDBC url: jdbc:h2:mem:helmes-homework-db
-- User: sa
+- H2 console url: `http://localhost:8787/h2-console`
+- Driver class: `org.h2.Driver`
+- JDBC url: `jdbc:h2:mem:helmes-homework-db`
+- User: `sa`
 - Password:
-- SQL dump file location:
+- SQL dump file location: `helmes-homework-api/src/main/resources/data.sql`
 
-```shell
-helmes-homework-api/src/main/resources/data.sql
-```
 
 API base url:
 - http://localhost:8787/api/v1/
@@ -89,14 +86,14 @@ npm install
 npm start
 ```
 
-## packages
+### packages
 
 - `component` — contains React JS components responsible for displaying the visual part of the application;
 - `service` — contains functions for communicating with the API;
 
 - `package.json` - contains all the project dependencies
 
-## Additional info
+### Additional info
 
 Application url:
 - http://localhost:3000
