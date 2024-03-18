@@ -8,8 +8,6 @@ import ee.dmipet90.helmeshomework.api.service.SectorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class SectorServiceImpl implements SectorService {
@@ -18,7 +16,7 @@ public class SectorServiceImpl implements SectorService {
 
     @Override
     public Iterable<SectorDto> getAllSectors() {
-        List<Sector> sectors = sectorRepository.findAllByParentIsNull();
+        Iterable<Sector> sectors = sectorRepository.findAllByParentIsNull();
         return sectorMapper.sectorsToSectorDtos(sectors);
     }
 
